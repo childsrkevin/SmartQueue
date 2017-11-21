@@ -1,37 +1,55 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, Alert, document } from 'react-native';
-import LoginButtonPressed from './LoginButtonPressed';
-export default class LoginForm extends Component {
+
+export default class SignUpForm extends Component {
 
 
 _onPressButton(){
   //Search for database here
-Alert.alert("Checking Database...")
+Alert.alert("Creating Account")
 }
+
 
   render() {
     return (
       //create Username textbox
       <View style={styles.container}>
-        <Text style={styles.label} id = "uLabel">Username</Text>
+{/***************USERNAME TEXTBOX*********************/}
+        <Text style={styles.label} id = "uLabel">Enter a Username</Text>
         <TextInput
         style={styles.input}
-        id ="username"
-        //when hitting the return key, go to password textbox
-        returnKeyType="next"
-        onSubmitEditing={() => this.passwordInput.focus()}
         />
-        <Text style={styles.label}>Password</Text>
+
+
+
+{/***************PASSWORD TEXTBOX*********************/}
+        <Text style={styles.label}>Enter a Password</Text>
+        <TextInput
+        style={styles.input}
+        secureTextEntry
+        />
+
+
+
+{/***************EMAIL TEXTBOX*********************/}
+        <Text style={styles.label}>Enter an Email</Text>
+        <TextInput
+        style={styles.input}
+        />
+
+
+
+{/***************ID TEXTBOX*********************/}
+        <Text style={styles.label}>Enter an ID</Text>
         <TextInput
         style={styles.input}
         returnKeyType="go"
-        secureTextEntry
-        //when hitting the return key, go to Login button
-        ref={(input) => this.passwordInput = input}
         />
 
+
+{/***************SIGNIN BUTTON*********************/}
         <TouchableOpacity  onPress={this._onPressButton} style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>LOGIN</Text>
+        <Text style={styles.buttonText}>SIGN UP</Text>
         </TouchableOpacity>
      </View>
     );
@@ -56,6 +74,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#2980b9',
     paddingVertical: 15,
+    marginBottom: 10
   },
   buttonText: {
     textAlign: 'center',
