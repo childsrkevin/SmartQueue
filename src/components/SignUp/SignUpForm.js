@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, Alert, document } from 'react-native';
+import firebase from 'firebase';
 
 export default class SignUpForm extends Component {
+constructor(props){
+  super(props);
+  this.state = {
+    email: "",
+    password: ""
+  }
+}
 
-
-_onPressButton(){
-  //Search for database here
-Alert.alert("Creating Account")
+submitme(){
+  //Search for database Authentication
+firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(){
+  alert("Success!");
+}).catch(function(e){
+  alert(e);
+})
 }
 
 
@@ -14,31 +25,20 @@ Alert.alert("Creating Account")
     return (
       //create Username textbox
       <View style={styles.container}>
-{/***************USERNAME TEXTBOX*********************/}
-        <Text style={styles.label} id = "uLabel">Enter a Username</Text>
-        <TextInput
-        style={styles.input}
-        />
 
-
-
+{/***************EMAIL TEXTBOX*********************/}
+              <Text style={styles.label}>Enter an Email</Text>
+              <TextInput
+              style={styles.input}
+              onChangeText={(email) => this.setState({email})}
+              />
 {/***************PASSWORD TEXTBOX*********************/}
         <Text style={styles.label}>Enter a Password</Text>
         <TextInput
         style={styles.input}
+        onChangeText={(password) => this.setState({password})}
         secureTextEntry
         />
-
-
-
-{/***************EMAIL TEXTBOX*********************/}
-        <Text style={styles.label}>Enter an Email</Text>
-        <TextInput
-        style={styles.input}
-        />
-
-
-
 {/***************ID TEXTBOX*********************/}
         <Text style={styles.label}>Enter an ID</Text>
         <TextInput
@@ -48,7 +48,7 @@ Alert.alert("Creating Account")
 
 
 {/***************SIGNIN BUTTON*********************/}
-        <TouchableOpacity  onPress={this._onPressButton} style={styles.buttonContainer}>
+        <TouchableOpacity  onPress={this.submitme.bind(this)} style={styles.buttonContainer}>
         <Text style={styles.buttonText}>SIGN UP</Text>
         </TouchableOpacity>
      </View>

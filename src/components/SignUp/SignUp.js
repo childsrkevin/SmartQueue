@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-native';
 import SignUpForm from './SignUpForm';
+import firebase from 'firebase';
 
 export default class SignUp extends Component {
   static navigationOptions= {

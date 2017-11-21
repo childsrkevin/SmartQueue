@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';;
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native';;
 const util = require('util');
+import firebase from 'firebase';
 
 export default class Login extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    }
+  }
+
+  submitme(){
+    //Search for database here
+  firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(){
+    alert("Welcome to Smart Queue");
+  }).catch(function(e){
+    alert(e);
+  })
+  }
+
+
+
   static navigationOptions= {
     title: 'SMART QUEUE',
   };
@@ -27,11 +47,11 @@ export default class Login extends Component {
 
 
 {/***************USERNAME TEXTBOX*********************/}
-        <Text style={styles.label} id = "uLabel">Username</Text>
+        <Text style={styles.label} id = "uLabel">Email</Text>
         <TextInput
           style={styles.input}
-          id ="username"
           returnKeyType="next"
+          onChangeText={(email) => this.setState({email})}
           onSubmitEditing={() => this.passwordInput.focus()}
         />
 
@@ -42,6 +62,7 @@ export default class Login extends Component {
         <TextInput
           style={styles.input}
           returnKeyType="go"
+          onChangeText={(password) => this.setState({password})}
           secureTextEntry
           ref={(input) => this.passwordInput = input}
         />
@@ -49,7 +70,7 @@ export default class Login extends Component {
 
 
 {/***************LOGIN BUTTON*********************/}
-        <TouchableOpacity  onPress={this._onPressButton} style={styles.buttonContainer}>
+        <TouchableOpacity  onPress={this.submitme.bind(this)} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
 
