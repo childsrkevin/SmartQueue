@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-native';
-import SignUpForm from './SignUpForm';
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TouchableOpacity, Alert, document, TextInput } from 'react-native';
+import styles from '../../../config/styles';
 import firebase from 'firebase';
 
 export default class SignUp extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    }
+  }
+
+
+  submitme(){
+    //Search for database Authentication
+  firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(){
+    alert("Success!");
+  }).catch(function(e){
+    alert(e);
+  })
+  }
+
+
   static navigationOptions= {
     title: 'Sign Up',
   };
@@ -11,39 +30,43 @@ export default class SignUp extends Component {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.formContainer}>
-        <SignUpForm />
+
+
+
+
+
+        {/***************EMAIL TEXTBOX*********************/}
+                      <Text style={styles.label}>Enter an Email</Text>
+                      <TextInput
+                      style={styles.input}
+                      onChangeText={(email) => this.setState({email})}
+                      />
+        {/***************PASSWORD TEXTBOX*********************/}
+                <Text style={styles.label}>Enter a Password</Text>
+                <TextInput
+                style={styles.input}
+                onChangeText={(password) => this.setState({password})}
+                secureTextEntry
+                />
+        {/***************ID TEXTBOX*********************/}
+                <Text style={styles.label}>Enter an ID</Text>
+                <TextInput
+                style={styles.input}
+                returnKeyType="go"
+                />
+
+
+        {/***************SIGNIN BUTTON*********************/}
+                <TouchableOpacity  onPress={this.submitme.bind(this)} style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>SIGN UP</Text>
+                </TouchableOpacity>
+
+
+
+
+
         </View>
      </KeyboardAvoidingView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3498db'
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    color: '#FFF',
-    marginTop: 10,
-    alignItems: 'center',
-    textAlign:  'center',
-    opacity: 0.9
-
-  },
-  logo: {
-    //379x339
-    width: 150,
-    height: 170
-  }
-});
-
-/*<Image
-  style={styles.logo}
-  source={require('../../images/Lightbulb_Icon.png')}
-/>*/

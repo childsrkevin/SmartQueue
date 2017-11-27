@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native';;
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native';
 const util = require('util');
 import firebase from 'firebase';
+import {navigateTo} from '../../../Nav';
+import styles from '../../../config/styles';
 
 export default class Login extends Component {
   constructor(props){
@@ -13,9 +15,12 @@ export default class Login extends Component {
   }
 
   submitme(){
+    var {navigate} = this.props.navigation;
     //Search for database here
   firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(){
     alert("Welcome to Smart Queue");
+    navigate("Third", {});
+
   }).catch(function(e){
     alert(e);
   })
@@ -86,56 +91,3 @@ export default class Login extends Component {
     );
   }
 }
-
-
-
-
-{/***************ALL OF THE STYLING*********************/}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3498db',
-    padding: 20
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    color: '#FFF',
-    marginTop: 10,
-    alignItems: 'center',
-    textAlign:  'center',
-    opacity: 0.9
-
-  },
-  logo: {
-    //379x339
-    width: 150,
-    height: 170
-  },
-  input: {
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 10,
-    color: '#FFF',
-    paddingHorizontal: 10
-  },
-  label: {
-    color: '#FFF'
-  },
-  buttonContainer: {
-    backgroundColor: '#2980b9',
-    paddingVertical: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10
-
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontWeight: '700'
-  }
-});
